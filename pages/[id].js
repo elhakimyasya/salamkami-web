@@ -10,6 +10,7 @@ import Closing1 from "../components/layouts/closing/1";
 import Loader from "../components/Loader";
 import Head from "next/head";
 import Themes from "../public/themes.json"
+import Metadata from "../components/Metadata";
 
 const Data = () => {
     const router = useRouter();
@@ -41,6 +42,8 @@ const Data = () => {
                 if (doc.exists()) {
                     setInvitationData([{ id: doc.id, ...doc.data() }]);
                     setInvitationLoaded(true);
+
+                    document.title = `Undangan Pernikahan ${doc.data().invitationData.male.name}`;
                 }
 
                 !doc.metadata.hasPendingWrites && unsubscribe();
@@ -61,42 +64,11 @@ const Data = () => {
             {isInvitationLoaded && (
                 invitationData.map((item) => (
                     <div key={item.id}>
-                        <Head>
-                            <title>Undangan Pernikahan {item.invitationData.male.name}</title>
-                            <meta charset="UTF-8" />
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-                            <meta name="format-detection" content="telephone=no" />
-                            <title>Undangan Pernikahan {item.invitationData.female.name} & {item.invitationData.male.name}</title>
-                            <meta name="title" content={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`} />
-                            <meta name="description" content={item.invitationData.reception.dateTime} />
-
-                            <meta name="author" content="SalamKami | EL Creative Developer" />
-                            <meta name="copyright" content="SalamKami | EL Creative Developer" />
-                            <meta name="distribution" content="Global" />
-                            <meta name="target" content="all" />
-                            <meta name="rating" content="general" />
-                            <meta name="theme-color" content={item.invitationTheme ? Themes[item.invitationTheme].colorMain : "#ffffff"} />
-
-                            <meta property="og:title" content={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`} />
-                            <meta property="og:description" content={item.invitationData.reception.dateTime} />
-                            <meta property="og:site_name" content={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`} />
-                            <meta property="og:url" content="/" />
-                            <meta property="og:locale" content="id" />
-                            <meta property="og:type" content="website" />
-                            <meta property="og:image" content="" />
-
-                            <meta name="twitter:title" content={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`} />
-                            <meta name="twitter:description" content="{{receptionDate}}" />
-                            <meta name="twitter:url" content="/" />
-                            <meta name="twitter:image" content="" />
-                            <meta name="twitter:card" content="summary_large_image" />
-
-                            <link href="./favicon.ico" rel="icon" type="image/x-icon" />
-                            <link href="./favicon.ico" rel="shortcut" type="image/icon" />
-                            <link href="./favicon.ico" rel="apple-touch-startup-image" />
-                            <link href="./favicon.ico" rel="apple-touch-icon" />
-                        </Head>
+                        <Metadata
+                            title={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`}
+                            description={item.invitationData.reception.dateTime}
+                            themeColor={item.invitationTheme ? Themes[item.invitationTheme].colorMain : "#ffffff"}
+                        />
 
                         <div className="glide relative h-screen w-full overflow-hidden">
                             <div className="glide__track h-full overflow-hidden" data-glide-el="track">
