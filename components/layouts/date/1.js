@@ -104,23 +104,34 @@ const Date1 = ({ item, children }) => {
         <div className="glide__slide layout_cover text-center">
             <div className="mx-auto h-full max-w-xl">
                 <div className="no-scrollbar flex h-full w-full flex-col items-center overflow-y-auto overflow-x-hidden p-5 before:m-auto before:content-[''] after:m-auto after:content-[''] ">
-                    {item.invitationCategory !== 3 && (
-                        <div className="animate_animated animate_fadeInLeft animate_slower mb-6 text-center">
-                            <div className="mb-2 font-fontSecondary text-3xl" style={{ color: item.invitationTheme ? Themes[item.invitationTheme].colorMain : Themes[1].colorMain }}>Akad Nikah</div>
-                            <div className="mb-2 text-sm font-medium">
-                                {getDateString(dateContract)}
+                    {item.invitationCategory === 3 ? (
+                        <div className="mb-8 text-center">
+                            <div className="animate_animated animate_fadeInDown animate_slow mb-2 font-fontSecondary text-3xl" style={{ color: item.invitationTheme ? Themes[item.invitationTheme].colorMain : Themes[1].colorMain }}>{item.invitationCategory !== 3 ? "Resepsi" : "Tasyakuran Aqiqah"}</div>
+                            <div className="animate_animated animate_fadeInUp animate_slow mb-2 text-sm font-medium">
+                                {getDateString(dateReception)}
+                            </div>
+                            <div className="animate_animated animate_fadeInUp animate_slower text-sm italic">{item.invitationData ? item.invitationData.reception.address : "Alamat Lengkap Acara Resepsi"}</div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="mb-6 text-center">
+                                <div className="animate_animated animate_fadeInLeft animate_slow mb-2 font-fontSecondary text-3xl" style={{ color: item.invitationTheme ? Themes[item.invitationTheme].colorMain : Themes[1].colorMain }}>Akad Nikah</div>
+                                <div className="animate_animated animate_fadeInLeft animate_slow mb-2 text-sm font-medium">
+                                    {getDateString(dateContract)}
+                                </div>
+
+                                <div className="animate_animated animate_fadeInLeft animate_slower text-sm italic">{item.invitationData ? item.invitationData.contract.address : "Alamat Lengkap Acara Akad Nikah"}</div>
                             </div>
 
-                            <div className="text-sm italic">{item.invitationData ? item.invitationData.contract.address : "Alamat Lengkap Acara Akad Nikah"}</div>
-                        </div>
+                            <div className="mb-8 text-center">
+                                <div className="animate_animated animate_fadeInRight animate_slow mb-2 font-fontSecondary text-3xl" style={{ color: item.invitationTheme ? Themes[item.invitationTheme].colorMain : Themes[1].colorMain }}>{item.invitationCategory !== 3 ? "Resepsi" : "Tasyakuran Aqiqah"}</div>
+                                <div className="animate_animated animate_fadeInRight animate_slow mb-2 text-sm font-medium">
+                                    {getDateString(dateReception)}
+                                </div>
+                                <div className="animate_animated animate_fadeInRight animate_slower text-sm italic">{item.invitationData ? item.invitationData.reception.address : "Alamat Lengkap Acara Resepsi"}</div>
+                            </div>
+                        </>
                     )}
-                    <div className="animate_animated animate_fadeInRight animate_slower mb-8 text-center">
-                        <div className="mb-2 font-fontSecondary text-3xl" style={{ color: item.invitationTheme ? Themes[item.invitationTheme].colorMain : Themes[1].colorMain }}>{item.invitationCategory !== 3 ? "Resepsi" : "Tasyakuran Aqiqah"}</div>
-                        <div className="mb-2 text-sm font-medium">
-                            {getDateString(dateReception)}
-                        </div>
-                        <div className="text-sm italic">{item.invitationData ? item.invitationData.reception.address : "Alamat Lengkap Acara Resepsi"}</div>
-                    </div>
 
                     <CountDown date={getDate(item.invitationData ? item.invitationData.reception.dateTime : new Date(Date.now() + 10 * 24 * 60 * 60 * 2000).toISOString().slice(0, 16))} />
 

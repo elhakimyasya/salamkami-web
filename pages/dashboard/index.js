@@ -8,7 +8,7 @@ import Loader from "../../components/Loader";
 import Navbar from "../../components/Navbar";
 import Auth from "../../components/Auth";
 
-const dashboard = () => {
+const index = () => {
     const [firstRender, setFirstRender] = useState(true);
 
     if (firstRender) {
@@ -45,7 +45,7 @@ const dashboard = () => {
                 });
 
                 setInvitationData(dataArray);
-                
+
                 setInvitationLoaded(true);
 
                 !doc.metadata.hasPendingWrites && unsubscribe();
@@ -105,4 +105,4 @@ const dashboard = () => {
     )
 };
 
-export default dashboard;
+export default index;
