@@ -1,92 +1,82 @@
 import React, { useEffect, useState } from "react";
-import { initializeApp } from "firebase/app";
 import { useRouter } from "next/router";
-import { doc, getFirestore, onSnapshot } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
 import Cover1 from "../components/layouts/cover/1"
 import Opening1 from "../components/layouts/opening/1";
 import Bride1 from "../components/layouts/bride/1";
 import Date1 from "../components/layouts/date/1";
 import Closing1 from "../components/layouts/closing/1";
 import Loader from "../components/Loader";
-import Head from "next/head";
-import Themes from "../public/themes.json"
 import Metadata from "../components/Metadata";
+import Themes from "../public/themes.json"
 
-const Data = () => {
+const Data = ({ invitationData }) => {
     const router = useRouter();
-    const [firstRender, setFirstRender] = useState(true);
-    const [invitationData, setInvitationData] = useState([]);
-    const [isInvitationLoaded, setInvitationLoaded] = useState(null);
 
-    if (firstRender) {
-        initializeApp({
-            apiKey: "AIzaSyAHOv64OFwobOVReOdO7I0FDn14ALio4Sk",
-            authDomain: "salamkami-website.firebaseapp.com",
-            projectId: "salamkami-website",
-            storageBucket: "salamkami-website.appspot.com",
-            messagingSenderId: "710379476608",
-            appId: "1:710379476608:web:9463f2d56ca7690f0eb865"
-        });
-
-        setFirstRender(false);
+    if (router.isFallback) {
+        return <Loader />;
     };
 
-    useEffect(() => {
-        const firestoreDatabase = getFirestore();
-
-        if (router.query.id) {
-            console.log(router.query.id)
-            setInvitationLoaded(false);
-
-            const unsubscribe = onSnapshot(doc(firestoreDatabase, `invitation/${router.query.id}`), (doc) => {
-                if (doc.exists()) {
-                    setInvitationData([{ id: doc.id, ...doc.data() }]);
-                    setInvitationLoaded(true);
-
-                    document.title = `Undangan Pernikahan ${doc.data().invitationData.male.name}`;
-                }
-
-                !doc.metadata.hasPendingWrites && unsubscribe();
-            });
-
-            return () => unsubscribe()
-        }
-    }, [router.query.id]);
-
-    if (isInvitationLoaded === null) {
-        return (
-            <Loader />
-        );
-    };
+    console.log(invitationData)
 
     return (
         <>
-            {isInvitationLoaded && (
-                invitationData.map((item) => (
-                    <div key={item.id}>
-                        <Metadata
-                            title={`Undangan Pernikahan ${item.invitationData.female.name} & ${item.invitationData.male.name}`}
-                            description={item.invitationData.reception.dateTime}
-                            themeColor={item.invitationTheme ? Themes[item.invitationTheme].colorMain : "#ffffff"}
-                        />
+            <Metadata
+                title={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`}
+                description={invitationData[0].invitationData.reception.dateTime}
+                themeColor={invitationData[0].invitationTheme ? Themes[invitationData[0].invitationTheme].colorMain : "#ffffff"}
+            />
 
-                        <div className="glide relative h-screen w-full overflow-hidden">
-                            <div className="glide__track h-full overflow-hidden" data-glide-el="track">
-                                <div className="glide__slides">
-                                    <Cover1 item={item} />
-                                    <Opening1 item={item} />
-                                    <Bride1 item={item} />
-                                    <Date1 item={item} />
-                                    <Closing1 item={item} />
-                                </div>
-                            </div>
-                        </div>
+            <div className="glide relative h-screen w-full overflow-hidden">
+                <div className="glide__track h-full overflow-hidden" data-glide-el="track">
+                    <div className="glide__slides">
+                        <Cover1 item={invitationData[0]} />
+                        <Opening1 item={invitationData[0]} />
+                        <Bride1 item={invitationData[0]} />
+                        <Date1 item={invitationData[0]} />
+                        <Closing1 item={invitationData[0]} />
                     </div>
-                ))
-            )}
+                </div>
+            </div>
         </>
+    )
+};
 
-    );
+export async function getServerSideProps({ params }) {
+    const invitationData = [];
+
+    initializeApp({
+        apiKey: "AIzaSyAHOv64OFwobOVReOdO7I0FDn14ALio4Sk",
+        authDomain: "salamkami-website.firebaseapp.com",
+        projectId: "salamkami-website",
+        storageBucket: "salamkami-website.appspot.com",
+        messagingSenderId: "710379476608",
+        appId: "1:710379476608:web:9463f2d56ca7690f0eb865"
+    });
+
+    const firestoreDatabase = getFirestore();
+
+    const docRef = doc(firestoreDatabase, `invitation/${params.id}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        invitationData.push({
+            id: docSnap.id,
+            ...docSnap.data(),
+            invitationCreated: docSnap.data().invitationCreated.toDate().toISOString()
+        });
+
+        return {
+            props: {
+                invitationData,
+            },
+        };
+    }
+
+    return {
+        notFound: true
+    };
 }
 
 export default Data;
