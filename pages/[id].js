@@ -8,8 +8,8 @@ import Bride1 from "../components/layouts/bride/1";
 import Date1 from "../components/layouts/date/1";
 import Closing1 from "../components/layouts/closing/1";
 import Loader from "../components/Loader";
-import Metadata from "../components/Metadata";
 import Themes from "../public/themes.json"
+import Head from "next/head";
 
 const Data = ({ invitationData }) => {
     const router = useRouter();
@@ -18,15 +18,45 @@ const Data = ({ invitationData }) => {
         return <Loader />;
     };
 
-    console.log(invitationData)
-
     return (
         <>
-            <Metadata
-                title={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`}
-                description={invitationData[0].invitationData.reception.dateTime}
-                themeColor={invitationData[0].invitationTheme ? Themes[invitationData[0].invitationTheme].colorMain : "#ffffff"}
-            />
+            <Head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+                <meta name="format-detection" content="telephone=no" />
+
+                <title>{`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`}</title>
+
+                <meta name="title" content={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`} />
+                <meta name="description" content={invitationData[0].invitationData.reception.dateTime} />
+
+                <meta name="author" content="SalamKami | EL Creative Developer" />
+                <meta name="copyright" content="SalamKami | EL Creative Developer" />
+                <meta name="distribution" content="Global" />
+                <meta name="target" content="all" />
+                <meta name="rating" content="general" />
+                <meta name="theme-color" content={invitationData[0].invitationTheme ? Themes[invitationData[0].invitationTheme].colorMain : "#ffffff"} />
+
+                <meta property="og:title" content={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`} />
+                <meta property="og:description" content={invitationData[0].invitationData.reception.dateTime} />
+                <meta property="og:site_name" content={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`} />
+                <meta property="og:url" content="/" />
+                <meta property="og:locale" content="id" />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content="" />
+
+                <meta name="twitter:title" content={`Undangan Pernikahan ${invitationData[0].invitationData.female.name} & ${invitationData[0].invitationData.male.name}`} />
+                <meta name="twitter:description" content={invitationData[0].invitationData.reception.dateTime} />
+                <meta name="twitter:url" content="/" />
+                <meta name="twitter:image" content="" />
+                <meta name="twitter:card" content="summary_large_image" />
+
+                <link href="./favicon.ico" rel="icon" type="image/x-icon" />
+                <link href="./favicon.ico" rel="shortcut" type="image/icon" />
+                <link href="./favicon.ico" rel="apple-touch-startup-image" />
+                <link href="./favicon.ico" rel="apple-touch-icon" />
+            </Head>
 
             <div className="glide relative h-screen w-full overflow-hidden">
                 <div className="glide__track h-full overflow-hidden" data-glide-el="track">
