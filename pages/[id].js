@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
@@ -11,7 +11,7 @@ import Loader from "../components/Loader";
 import Themes from "../public/themes.json"
 import Head from "next/head";
 
-const id = ({ invitationData }) => {
+const Id = ({ invitationData }) => {
     const router = useRouter();
 
     if (router.isFallback) {
@@ -152,4 +152,4 @@ export async function getServerSideProps({ params }) {
     };
 }
 
-export default id;
+export default Id;
