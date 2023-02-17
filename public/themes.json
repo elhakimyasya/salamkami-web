@@ -1,0 +1,18 @@
+{
+    "1": {
+        "colorMain": "#4d6648",
+        "colorText": "#202124",
+        "colorBackground": "#ffffff",
+        "ornamentTop": "https://undangan.salamkami.com/assets/images/layouts/1/imageOrnamentTop.png",
+        "ornamentBottom": "https://undangan.salamkami.com/assets/images/layouts/1/imageOrnamentBottom.png",
+        "ornamentBackground": "https://undangan.salamkami.com/assets/images/layouts/1/imageBackground.jpg"
+    },
+    "2": {
+        "colorMain": "#4d6648",
+        "colorText": "#202124",
+        "colorBackground": "#ffffff",
+        "ornamentTop": "https://undangan.salamkami.com/assets/images/layouts/2/imageOrnamentTop.png",
+        "ornamentBottom": "https://undangan.salamkami.com/assets/images/layouts/2/imageOrnamentBottom.png",
+        "ornamentBackground": "https://undangan.salamkami.com/assets/images/layouts/2/imageBackground.jpg"
+    }
+}
