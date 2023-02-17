@@ -15,7 +15,7 @@ const Id = ({ invitationData }) => {
     const router = useRouter();
 
     if (router.isFallback) {
-        return <Loader />;
+        return (<Loader />);
     };
 
     const getDate = (data, request) => {
@@ -25,21 +25,25 @@ const Id = ({ invitationData }) => {
             const options = {
                 weekday: 'long'
             };
+
             return date.toLocaleDateString('ID', options);
         } else if (request === 'date') {
             const options = {
                 day: '2-digit',
             };
+
             return date.toLocaleDateString('ID', options);
         } else if (request === 'month') {
             const options = {
                 month: 'long'
             };
+
             return date.toLocaleDateString('ID', options);
         } else if (request === 'month-digit') {
             const options = {
                 month: '2-digit'
             };
+
             return date.toLocaleDateString('ID', options);
         } else if (request === 'year') {
             return date.getFullYear();
@@ -52,9 +56,15 @@ const Id = ({ invitationData }) => {
         }
     };
 
-    const metaTitle = invitationData[0].invitationData ? invitationData[0].invitationCategory === 3 ? `Undangan Tasyakuran Aqiqah ${invitationData[0].invitationData.male.name}` : `Undangan Pernikahan ${invitationData[0].invitationData.female.nameShort} & ${invitationData[0].invitationData.male.nameShort}` : "";
-    const metaDesciption = invitationData[0].invitationData ? `${getDate(invitationData[0].invitationData.reception.dateTime, 'day')}, ${getDate(invitationData[0].invitationData.reception.dateTime, 'date')} ${getDate(invitationData[0].invitationData.reception.dateTime, 'month')} ${getDate(invitationData[0].invitationData.reception.dateTime, 'year')}` : "";
-    const metaThemeColor = invitationData[0].invitationData ? invitationData[0].invitationTheme ? Themes[invitationData[0].invitationTheme].colorMain : "#ffffff" : "";
+    const metaTitle = invitationData[0].invitationData && invitationData[0].invitationCategory === 3 ?
+        `Undangan Tasyakuran Aqiqah ${invitationData[0].invitationData.male.name}` :
+        `Undangan Pernikahan ${invitationData[0].invitationData.female.nameShort} & ${invitationData[0].invitationData.male.nameShort}`;
+
+    const metaDesciption = invitationData[0].invitationData &&
+        `${getDate(invitationData[0].invitationData.reception.dateTime, 'day')}, ${getDate(invitationData[0].invitationData.reception.dateTime, 'date')} ${getDate(invitationData[0].invitationData.reception.dateTime, 'month')} ${getDate(invitationData[0].invitationData.reception.dateTime, 'year')}`;
+
+    const metaThemeColor = invitationData[0].invitationData && invitationData[0].invitationTheme ?
+        Themes[invitationData[0].invitationTheme].colorMain : "#ffffff";
 
     return (
         <>
@@ -109,9 +119,10 @@ const Id = ({ invitationData }) => {
                             </div>
                         </div>
                     </div>
+
+                    <div class="animate_kenburns fixed top-0 -z-10 h-full w-full bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${invitationData[0].invitationTheme ? Themes[invitationData[0].invitationTheme].ornamentBackground : Themes[1].ornamentBackground})` }}></div>
                 </>
             )}
-
         </>
     )
 };
@@ -150,6 +161,6 @@ export async function getServerSideProps({ params }) {
     return {
         notFound: true
     };
-}
+};
 
 export default Id;

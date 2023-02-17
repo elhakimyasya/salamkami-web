@@ -19,7 +19,7 @@ const Navbar = ({ userData }) => {
 
     return (
         <>
-            <header className="w-full flex flex-col items-center justify-center py-2 shadow-md min-h-[64px] select-none fixed top-0 bg-white z-50">
+            <header className="w-full flex flex-col items-center justify-center py-2 shadow-md min-h-[64px] select-none fixed top-0 bg-white z-40">
                 <div className="relative flex items-center justify-between flex-row w-full max-w-3xl px-4 ">
                     <Link href="../../dashboard" className="flex items-center justify-start flex-row max-w-3xl">
                         <Image width={36} height={36} src="/logo.png" alt="SalamKami" className="w-9 h-9 mr-3" />

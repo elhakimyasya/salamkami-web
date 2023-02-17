@@ -2,13 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 const Dropdown = ({ children, dropdownIsOpen, setDropdownIsOpen }) => {
     const ref = useRef(null);
-
-    const handleClickOutside = (event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-            setDropdownIsOpen(false);
-        }
-    };
-
+    
     useEffect(() => {
         if (dropdownIsOpen) {
             document.addEventListener("mousedown", handleClickOutside);
@@ -20,6 +14,12 @@ const Dropdown = ({ children, dropdownIsOpen, setDropdownIsOpen }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [dropdownIsOpen]);
+
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setDropdownIsOpen(false);
+        }
+    };
 
     return (
         dropdownIsOpen && (
