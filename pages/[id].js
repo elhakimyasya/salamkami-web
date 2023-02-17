@@ -10,11 +10,10 @@ import Closing1 from "../components/layouts/closing/1";
 import Loader from "../components/Loader";
 import Themes from "../public/themes.json"
 import Head from "next/head";
+import Maps1 from "../components/layouts/maps/1";
 
 const Id = ({ invitationData }) => {
-    const router = useRouter();
-
-    if (router.isFallback) {
+    if (useRouter().isFallback) {
         return (<Loader />);
     };
 
@@ -115,6 +114,9 @@ const Id = ({ invitationData }) => {
                                 <Opening1 item={invitationData[0]} />
                                 <Bride1 item={invitationData[0]} />
                                 <Date1 item={invitationData[0]} />
+                                {invitationData[0].invitationSlides.maps.enable === 1 && invitationData[0].invitationData.reception.maps !== "" && (
+                                    <Maps1 item={invitationData[0]} />
+                                )}
                                 <Closing1 item={invitationData[0]} />
                             </div>
                         </div>

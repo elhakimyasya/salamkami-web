@@ -6,12 +6,15 @@ const Modal = ({ children, modalTitle, modalIsOpen, setModalIsOpen }) => {
     useEffect(() => {
         if (modalIsOpen) {
             document.addEventListener("mousedown", handleClickOutside);
+            document.documentElement.classList.add("modal-open");
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.documentElement.classList.remove("modal-open");
         }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.documentElement.classList.remove("modal-open");
         };
     }, [modalIsOpen]);
 
@@ -40,14 +43,14 @@ const Modal = ({ children, modalTitle, modalIsOpen, setModalIsOpen }) => {
                                 </div>
                             </div>
 
-                            <div className="max-h-[80vh] space-y-6 overflow-y-auto overflow-x-hidden p-6">
+                            <div className="max-h-[80vh] overflow-y-auto overflow-x-hidden p-6">
                                 {children}
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div className="fixed inset-0 z-40 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 w-full h-full"></div>
+
+                <div className="fixed inset-0 z-40 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 w-full h-full" onClick={handleCloseModal}></div>
             </>
         )
     );

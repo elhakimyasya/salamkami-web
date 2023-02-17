@@ -216,35 +216,6 @@ html {
 
 
 
-.swiper-slide-active .animate_fadeIn {
-    animation-name: fadeIn;
-}
-.swiper-slide-active .animate_fadeInUp {
-    animation-name: fadeInUp;
-}
-.swiper-slide-active .animate_fadeInRight {
-    animation-name: fadeInRight;
-}
-.swiper-slide-active .animate_fadeInLeft {
-    animation-name: fadeInLeft;
-}
-.swiper-slide-active .animate_fadeInTopLeft {
-    animation-name: fadeInTopLeft;
-}
-.swiper-slide-active .animate_fadeInBottomRight {
-    animation-name: fadeInBottomRight;
-}
-.swiper-slide-active .animate_fadeInDown {
-    animation-name: fadeInDown;
-}
-.swiper-slide-active .animate_fadeInLeft {
-    animation-name: fadeInLeft;
-}
-.swiper-slide-active .animate_fadeInRight {
-    animation-name: fadeInRight;
-}
-
-
 .glide__slide--active .animate_fadeIn {
     animation-name: fadeIn;
 }
